@@ -1,0 +1,58 @@
+name: Security validation
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install -r backend/requirements.lock
+      - run: PYTHONPATH=backend pytest backend/tests -q --junitxml=test-results.xml
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node --test tests/web.test.mjs
+      - uses: actions/upload-artifact@v4
+        with: {name: regression-results, path: test-results.xml}
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install bandit==1.8.3
+      - run: bandit -r backend/sentinel -ll
+  dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install pip-audit==2.9.0
+      - run: pip-audit -r backend/requirements.lock
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: gitleaks/gitleaks-action@v2
+        env: {GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'}
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t sentinel-lab:ci .
+      - uses: aquasecurity/trivy-action@0.30.0
+        with:
+          image-ref: sentinel-lab:ci
+          severity: HIGH,CRITICAL
+          exit-code: '1'
+      - uses: aquasecurity/trivy-action@0.30.0
+        with:
+          image-ref: sentinel-lab:ci
+          format: cyclonedx
+          output: sbom.cdx.json
+      - uses: actions/upload-artifact@v4
+        with: {name: sbom, path: sbom.cdx.json}

@@ -1,0 +1,694 @@
+{
+  "generated_at": "2026-10-11T14:05:19Z",
+  "mode": "recorded-local-lab",
+  "scenarios": [
+    {
+      "id": "benign",
+      "title": "Authorized payment read",
+      "method": "GET",
+      "path": "/payments/pay-a-001",
+      "requests": 1,
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "id": "pay-a-001",
+            "tenant": "tenant-a",
+            "amount_cents": 12500,
+            "status": "pending"
+          },
+          "correlation": "94f7e1bc-0d8e-4894-87f6-530188cf2789"
+        }
+      ],
+      "duration_ms": 5.98
+    },
+    {
+      "id": "access",
+      "title": "Cross-tenant access",
+      "method": "GET",
+      "path": "/payments/pay-b-001",
+      "requests": 3,
+      "responses": [
+        {
+          "status": 404,
+          "body": {
+            "detail": "Payment not found"
+          },
+          "correlation": "4652f7dd-5474-411f-8e64-6daeffd59c2b"
+        },
+        {
+          "status": 404,
+          "body": {
+            "detail": "Payment not found"
+          },
+          "correlation": "bd7e718c-79bf-4de3-8c04-3b6cc5d1bf4a"
+        },
+        {
+          "status": 404,
+          "body": {
+            "detail": "Payment not found"
+          },
+          "correlation": "8e481186-1de3-48e1-bfbb-6e842c016335"
+        }
+      ],
+      "duration_ms": 11.48
+    },
+    {
+      "id": "auth",
+      "title": "Invalid authentication",
+      "method": "GET",
+      "path": "/payments/pay-a-001",
+      "requests": 5,
+      "responses": [
+        {
+          "status": 401,
+          "body": {
+            "detail": "Invalid or missing access token"
+          },
+          "correlation": "f02c1d53-532d-4c46-b668-8d3c23d1fb23"
+        },
+        {
+          "status": 401,
+          "body": {
+            "detail": "Invalid or missing access token"
+          },
+          "correlation": "62364f25-a27c-464b-a482-e1450efa322f"
+        },
+        {
+          "status": 401,
+          "body": {
+            "detail": "Invalid or missing access token"
+          },
+          "correlation": "ee96fb79-386d-473e-a97d-6b4cbbb0dad6"
+        },
+        {
+          "status": 401,
+          "body": {
+            "detail": "Invalid or missing access token"
+          },
+          "correlation": "09bfea3e-c9c8-4665-8b67-316d31b25eed"
+        },
+        {
+          "status": 401,
+          "body": {
+            "detail": "Invalid or missing access token"
+          },
+          "correlation": "2d2e82b1-6ce0-409a-873a-9bcf26624f55"
+        }
+      ],
+      "duration_ms": 11.37
+    },
+    {
+      "id": "export",
+      "title": "Repeated data retrieval",
+      "method": "GET",
+      "path": "/payments",
+      "requests": 4,
+      "responses": [
+        {
+          "status": 200,
+          "body": [
+            {
+              "id": "pay-a-001",
+              "amount_cents": 12500,
+              "status": "pending"
+            }
+          ],
+          "correlation": "fd70710f-2d56-42e7-ba11-f7055df16501"
+        },
+        {
+          "status": 200,
+          "body": [
+            {
+              "id": "pay-a-001",
+              "amount_cents": 12500,
+              "status": "pending"
+            }
+          ],
+          "correlation": "f4fd336c-62c8-49a8-9123-e678c3d46dcf"
+        },
+        {
+          "status": 200,
+          "body": [
+            {
+              "id": "pay-a-001",
+              "amount_cents": 12500,
+              "status": "pending"
+            }
+          ],
+          "correlation": "9886f738-7f35-4f3f-ab8a-27eded74197e"
+        },
+        {
+          "status": 200,
+          "body": [
+            {
+              "id": "pay-a-001",
+              "amount_cents": 12500,
+              "status": "pending"
+            }
+          ],
+          "correlation": "fc95b81f-5269-4926-a454-412bb728b32a"
+        }
+      ],
+      "duration_ms": 12.82
+    },
+    {
+      "id": "admin",
+      "title": "Audited analyst action",
+      "method": "PATCH",
+      "path": "/incidents/{incident_id}",
+      "requests": 1,
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "id": "d293322f-b7d3-4162-8080-d27a6a8f56e5",
+            "status": "investigating"
+          },
+          "correlation": "fa3e553d-a6d9-44ef-bb4d-657ee80dd112"
+        }
+      ],
+      "duration_ms": 9.06
+    },
+    {
+      "id": "rate",
+      "title": "Request allowance exceeded",
+      "method": "GET",
+      "path": "/payments/pay-a-001",
+      "requests": 3,
+      "responses": [
+        {
+          "status": 200,
+          "body": {
+            "id": "pay-a-001",
+            "tenant": "tenant-a",
+            "amount_cents": 12500,
+            "status": "pending"
+          },
+          "correlation": "3c2ea4f7-a714-4f6a-ade1-56b29973a669"
+        },
+        {
+          "status": 200,
+          "body": {
+            "id": "pay-a-001",
+            "tenant": "tenant-a",
+            "amount_cents": 12500,
+            "status": "pending"
+          },
+          "correlation": "a455768f-3ff1-4726-a54b-b4b3079f5eb3"
+        },
+        {
+          "status": 429,
+          "body": {
+            "detail": "Request allowance exceeded"
+          },
+          "correlation": "29eaaac3-987f-42a4-bfc4-438992410e72"
+        }
+      ],
+      "duration_ms": 8.63
+    }
+  ],
+  "incidents": [
+    {
+      "id": "89117301-cdd7-4270-b77c-eb4313d89b7e",
+      "created": 1791727519.712786,
+      "tenant": "tenant-a",
+      "actor": "noisy-client",
+      "rule": "RATE-001",
+      "rule_version": "1.0.0",
+      "severity": "medium",
+      "status": "open",
+      "assignee": "",
+      "notes": "",
+      "evidence_ids": [
+        "ac284a53-83b3-4d81-a408-15ccf6993d75"
+      ],
+      "kind": "rate_limited",
+      "rationale": "A verified identity exceeded the configured request allowance.",
+      "guidance": "Check legitimate client retries before escalating."
+    },
+    {
+      "id": "24e7a63f-c074-495b-853d-877368bb5ac7",
+      "created": 1791727519.7034855,
+      "tenant": "tenant-a",
+      "actor": "analyst",
+      "rule": "ADMIN-001",
+      "rule_version": "1.0.0",
+      "severity": "low",
+      "status": "open",
+      "assignee": "",
+      "notes": "",
+      "evidence_ids": [
+        "4c1c3583-324b-475d-83ea-8f360b5afbef"
+      ],
+      "kind": "admin_action",
+      "rationale": "Privileged incident changes require an auditable review trail.",
+      "guidance": "Verify the change and its approver."
+    },
+    {
+      "id": "d293322f-b7d3-4162-8080-d27a6a8f56e5",
+      "created": 1791727519.6921175,
+      "tenant": "tenant-a",
+      "actor": "alice",
+      "rule": "EXPORT-001",
+      "rule_version": "1.0.0",
+      "severity": "medium",
+      "status": "investigating",
+      "assignee": "analyst",
+      "notes": "Synthetic evidence review",
+      "evidence_ids": [
+        "9ed011f6-dcd7-40ce-93f6-4542a0e4f00c",
+        "46fce51a-2bab-4563-8d32-383c916e1b53",
+        "70262b62-ea6b-4802-94d1-102bfc6b2b06",
+        "533934f5-40ad-4018-b6ac-9ba39a81a304"
+      ],
+      "kind": "bulk_read",
+      "rationale": "Repeated full payment-list reads can indicate unusual retrieval.",
+      "guidance": "Compare with expected workflow and inspect request timing."
+    },
+    {
+      "id": "679e08f9-4d3f-4337-9145-b1568b876620",
+      "created": 1791727519.6785684,
+      "tenant": "unverified",
+      "actor": "anonymous",
+      "rule": "AUTH-001",
+      "rule_version": "1.0.0",
+      "severity": "medium",
+      "status": "open",
+      "assignee": "",
+      "notes": "",
+      "evidence_ids": [
+        "dcd9047e-6f6c-4fa9-b540-e37d7b3252cc",
+        "4e6bca53-e8ac-4f72-9b01-99a611021ded",
+        "7ca17e0c-cfa2-4e20-9d96-6877e4f14a06",
+        "9121d1a9-29c6-43d1-9710-1eb41e677bc3",
+        "0e7d286b-09c6-4064-b6b3-94e8c4956fb2"
+      ],
+      "kind": "auth_failure",
+      "rationale": "Repeated invalid authentication may indicate credential abuse.",
+      "guidance": "Review gateway source evidence and identity provider logs. Anonymous requests are not attributed to a verified tenant."
+    },
+    {
+      "id": "3648e8fd-d9d6-4e00-809f-7a7354e0eba0",
+      "created": 1791727519.6662893,
+      "tenant": "tenant-a",
+      "actor": "alice",
+      "rule": "ACCESS-001",
+      "rule_version": "1.0.0",
+      "severity": "high",
+      "status": "open",
+      "assignee": "",
+      "notes": "",
+      "evidence_ids": [
+        "199a2b51-61cc-4665-afb9-a53d3e9f26cb",
+        "441c687e-3fab-4e45-ad66-f2a39c24e14a",
+        "19a09099-84f9-4b67-8a2f-89fd3289bf5d"
+      ],
+      "kind": "access_denied",
+      "rationale": "A verified identity repeatedly requested records outside its tenant.",
+      "guidance": "Inspect correlated requests, verify intended access, and review session and permissions."
+    }
+  ],
+  "events": [
+    {
+      "id": "063654da-b0d3-4873-ac63-1d428b9ef69e",
+      "timestamp": 1791727519.7508028,
+      "tenant": "tenant-a",
+      "actor": "benign-cohort",
+      "kind": "payment_read",
+      "correlation": "1df7ca03-1ecb-4d27-9e8f-340b4a8adeb2",
+      "detail": {
+        "resource": "pay-a-001"
+      }
+    },
+    {
+      "id": "b476b5b7-c677-4322-a844-2223d88c0d31",
+      "timestamp": 1791727519.7483644,
+      "tenant": "tenant-a",
+      "actor": "benign-cohort",
+      "kind": "payment_read",
+      "correlation": "6593fb69-8ab3-48b4-a224-1ea2143ba767",
+      "detail": {
+        "resource": "pay-a-001"
+      }
+    },
+    {
+      "id": "eae3a997-f6af-4ab1-b53a-e59377993ead",
+      "timestamp": 1791727519.745535,
+      "tenant": "tenant-a",
+      "actor": "benign-cohort",
+      "kind": "payment_read",
+      "correlation": "8f415742-c341-42f9-8ebb-77e55b95d732",
+      "detail": {
+        "resource": "pay-a-001"
+      }
+    },
+    {
+      "id": "bc57020d-7138-44a4-8a1e-818007ab73dd",
+      "timestamp": 1791727519.7424645,
+      "tenant": "tenant-a",
+      "actor": "benign-cohort",
+      "kind": "payment_read",
+      "correlation": "d65e5d12-76c5-4765-9add-1b36a3503f41",
+      "detail": {
+        "resource": "pay-a-001"
+      }
+    },
+    {
+      "id": "f1c0591f-8053-4578-91f8-79a2650c7165",
+      "timestamp": 1791727519.7390358,
+      "tenant": "tenant-a",
+      "actor": "benign-cohort",
+      "kind": "payment_read",
+      "correlation": "ec2da9b7-e483-497c-a2c4-a634c42b6514",
+      "detail": {
+        "resource": "pay-a-001"
+      }
+    },
+    {
+      "id": "2fc2e197-9dcd-47d7-bc7a-d1eae929e713",
+      "timestamp": 1791727519.7331252,
+      "tenant": "tenant-a",
+      "actor": "benign-cohort",
+      "kind": "payment_read",
+      "correlation": "fdd8cfcd-b10c-445d-b49c-8a74bd1343de",
+      "detail": {
+        "resource": "pay-a-001"
+      }
+    },
+    {
+      "id": "4e96b474-3f75-4adf-93a3-4d391937feab",
+      "timestamp": 1791727519.7300973,
+      "tenant": "tenant-a",
+      "actor": "benign-cohort",
+      "kind": "payment_read",
+      "correlation": "8709e36f-4865-476b-9a33-20aa4c4344cd",
+      "detail": {
+        "resource": "pay-a-001"
+      }
+    },
+    {
+      "id": "8c38f145-8248-4920-9622-76f256f781bb",
+      "timestamp": 1791727519.7264082,
+      "tenant": "tenant-a",
+      "actor": "benign-cohort",
+      "kind": "payment_read",
+      "correlation": "76392791-c512-4bc3-a9d1-d3d16bab2363",
+      "detail": {
+        "resource": "pay-a-001"
+      }
+    },
+    {
+      "id": "b1e13a99-71ba-446d-8b9a-0f8218c7633a",
+      "timestamp": 1791727519.7218087,
+      "tenant": "tenant-a",
+      "actor": "benign-cohort",
+      "kind": "payment_read",
+      "correlation": "4b18eed3-b733-4720-9bac-dc95fb32661b",
+      "detail": {
+        "resource": "pay-a-001"
+      }
+    },
+    {
+      "id": "251a10ef-df98-43b8-9fd4-7b482979a796",
+      "timestamp": 1791727519.717714,
+      "tenant": "tenant-a",
+      "actor": "benign-cohort",
+      "kind": "payment_read",
+      "correlation": "a0bb07e3-c5cb-4809-abef-bc23c9292a53",
+      "detail": {
+        "resource": "pay-a-001"
+      }
+    },
+    {
+      "id": "ac284a53-83b3-4d81-a408-15ccf6993d75",
+      "timestamp": 1791727519.712786,
+      "tenant": "tenant-a",
+      "actor": "noisy-client",
+      "kind": "rate_limited",
+      "correlation": "29eaaac3-987f-42a4-bfc4-438992410e72",
+      "detail": {
+        "reason": "request_allowance_exceeded"
+      }
+    },
+    {
+      "id": "20a611b7-525a-4a6b-986d-80cea023bb93",
+      "timestamp": 1791727519.7107422,
+      "tenant": "tenant-a",
+      "actor": "noisy-client",
+      "kind": "payment_read",
+      "correlation": "a455768f-3ff1-4726-a54b-b4b3079f5eb3",
+      "detail": {
+        "resource": "pay-a-001"
+      }
+    },
+    {
+      "id": "aba211c4-e711-4653-a31f-936421597035",
+      "timestamp": 1791727519.7081347,
+      "tenant": "tenant-a",
+      "actor": "noisy-client",
+      "kind": "payment_read",
+      "correlation": "3c2ea4f7-a714-4f6a-ade1-56b29973a669",
+      "detail": {
+        "resource": "pay-a-001"
+      }
+    },
+    {
+      "id": "4c1c3583-324b-475d-83ea-8f360b5afbef",
+      "timestamp": 1791727519.7034855,
+      "tenant": "tenant-a",
+      "actor": "analyst",
+      "kind": "admin_action",
+      "correlation": "fa3e553d-a6d9-44ef-bb4d-657ee80dd112",
+      "detail": {
+        "incident": "d293322f-b7d3-4162-8080-d27a6a8f56e5"
+      }
+    },
+    {
+      "id": "533934f5-40ad-4018-b6ac-9ba39a81a304",
+      "timestamp": 1791727519.6921175,
+      "tenant": "tenant-a",
+      "actor": "alice",
+      "kind": "bulk_read",
+      "correlation": "fc95b81f-5269-4926-a454-412bb728b32a",
+      "detail": {
+        "count": 1
+      }
+    },
+    {
+      "id": "70262b62-ea6b-4802-94d1-102bfc6b2b06",
+      "timestamp": 1791727519.689545,
+      "tenant": "tenant-a",
+      "actor": "alice",
+      "kind": "bulk_read",
+      "correlation": "9886f738-7f35-4f3f-ab8a-27eded74197e",
+      "detail": {
+        "count": 1
+      }
+    },
+    {
+      "id": "46fce51a-2bab-4563-8d32-383c916e1b53",
+      "timestamp": 1791727519.6869383,
+      "tenant": "tenant-a",
+      "actor": "alice",
+      "kind": "bulk_read",
+      "correlation": "f4fd336c-62c8-49a8-9123-e678c3d46dcf",
+      "detail": {
+        "count": 1
+      }
+    },
+    {
+      "id": "9ed011f6-dcd7-40ce-93f6-4542a0e4f00c",
+      "timestamp": 1791727519.6832218,
+      "tenant": "tenant-a",
+      "actor": "alice",
+      "kind": "bulk_read",
+      "correlation": "fd70710f-2d56-42e7-ba11-f7055df16501",
+      "detail": {
+        "count": 1
+      }
+    },
+    {
+      "id": "0e7d286b-09c6-4064-b6b3-94e8c4956fb2",
+      "timestamp": 1791727519.6785684,
+      "tenant": "unverified",
+      "actor": "anonymous",
+      "kind": "auth_failure",
+      "correlation": "2d2e82b1-6ce0-409a-873a-9bcf26624f55",
+      "detail": {
+        "reason": "invalid_or_missing_token"
+      }
+    },
+    {
+      "id": "9121d1a9-29c6-43d1-9710-1eb41e677bc3",
+      "timestamp": 1791727519.6767015,
+      "tenant": "unverified",
+      "actor": "anonymous",
+      "kind": "auth_failure",
+      "correlation": "09bfea3e-c9c8-4665-8b67-316d31b25eed",
+      "detail": {
+        "reason": "invalid_or_missing_token"
+      }
+    },
+    {
+      "id": "7ca17e0c-cfa2-4e20-9d96-6877e4f14a06",
+      "timestamp": 1791727519.6746066,
+      "tenant": "unverified",
+      "actor": "anonymous",
+      "kind": "auth_failure",
+      "correlation": "ee96fb79-386d-473e-a97d-6b4cbbb0dad6",
+      "detail": {
+        "reason": "invalid_or_missing_token"
+      }
+    },
+    {
+      "id": "4e6bca53-e8ac-4f72-9b01-99a611021ded",
+      "timestamp": 1791727519.6726656,
+      "tenant": "unverified",
+      "actor": "anonymous",
+      "kind": "auth_failure",
+      "correlation": "62364f25-a27c-464b-a482-e1450efa322f",
+      "detail": {
+        "reason": "invalid_or_missing_token"
+      }
+    },
+    {
+      "id": "dcd9047e-6f6c-4fa9-b540-e37d7b3252cc",
+      "timestamp": 1791727519.6704397,
+      "tenant": "unverified",
+      "actor": "anonymous",
+      "kind": "auth_failure",
+      "correlation": "f02c1d53-532d-4c46-b668-8d3c23d1fb23",
+      "detail": {
+        "reason": "invalid_or_missing_token"
+      }
+    },
+    {
+      "id": "19a09099-84f9-4b67-8a2f-89fd3289bf5d",
+      "timestamp": 1791727519.6662893,
+      "tenant": "tenant-a",
+      "actor": "alice",
+      "kind": "access_denied",
+      "correlation": "8e481186-1de3-48e1-bfbb-6e842c016335",
+      "detail": {
+        "resource": "pay-b-001",
+        "reason": "object_scope_denied"
+      }
+    },
+    {
+      "id": "441c687e-3fab-4e45-ad66-f2a39c24e14a",
+      "timestamp": 1791727519.6635988,
+      "tenant": "tenant-a",
+      "actor": "alice",
+      "kind": "access_denied",
+      "correlation": "bd7e718c-79bf-4de3-8c04-3b6cc5d1bf4a",
+      "detail": {
+        "resource": "pay-b-001",
+        "reason": "object_scope_denied"
+      }
+    },
+    {
+      "id": "199a2b51-61cc-4665-afb9-a53d3e9f26cb",
+      "timestamp": 1791727519.659854,
+      "tenant": "tenant-a",
+      "actor": "alice",
+      "kind": "access_denied",
+      "correlation": "4652f7dd-5474-411f-8e64-6daeffd59c2b",
+      "detail": {
+        "resource": "pay-b-001",
+        "reason": "object_scope_denied"
+      }
+    },
+    {
+      "id": "18ace6f1-bdee-4f38-b3c2-eefc7497045d",
+      "timestamp": 1791727519.6556308,
+      "tenant": "tenant-a",
+      "actor": "alice",
+      "kind": "payment_read",
+      "correlation": "94f7e1bc-0d8e-4894-87f6-530188cf2789",
+      "detail": {
+        "resource": "pay-a-001"
+      }
+    }
+  ],
+  "metrics": {
+    "seeded_rules_detected": 5,
+    "seeded_rules_expected": 5,
+    "benign_requests": 10,
+    "benign_alerts": 0,
+    "scope": "Single-process TestClient run using SQLite; not a production benchmark or general false-positive estimate."
+  },
+  "assets": [
+    {
+      "id": "public-api",
+      "public": true,
+      "encrypted": true,
+      "permissions": [
+        "storage.read"
+      ],
+      "can_access": [
+        "service-account"
+      ]
+    },
+    {
+      "id": "service-account",
+      "permissions": [
+        "*"
+      ],
+      "can_access": [
+        "payment-store"
+      ]
+    },
+    {
+      "id": "payment-store",
+      "encrypted": false,
+      "sensitive": true
+    }
+  ],
+  "findings": [
+    {
+      "asset": "public-api",
+      "rule": "POSTURE-001",
+      "severity": "high",
+      "reason": "Public exposure in supplied configuration"
+    },
+    {
+      "asset": "service-account",
+      "rule": "POSTURE-002",
+      "severity": "high",
+      "reason": "Wildcard permissions"
+    },
+    {
+      "asset": "payment-store",
+      "rule": "POSTURE-003",
+      "severity": "medium",
+      "reason": "Encryption disabled"
+    }
+  ],
+  "attack_paths": [
+    {
+      "nodes": [
+        "internet",
+        "public-api",
+        "service-account",
+        "payment-store"
+      ],
+      "basis": "Explicit public and can_access fixture relationships; no exploit validation",
+      "priority": "high"
+    }
+  ],
+  "tests": {
+    "passed": 35,
+    "failed": 0,
+    "seconds": 1.479
+  },
+  "audit": {
+    "packages": 29,
+    "vulnerabilities": 0,
+    "scanned_at": "2026-10-11T14:06:25Z"
+  },
+  "web_tests": {
+    "passed": 9,
+    "failed": 0
+  }
+}

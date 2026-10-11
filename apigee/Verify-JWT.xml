@@ -1,0 +1,7 @@
+<VerifyJWT name="Verify-Access-Token">
+  <Algorithm>RS256</Algorithm>
+  <Source>request.header.authorization</Source>
+  <PublicKey><JWKS uri="https://YOUR_IDP/realms/sentinel/protocol/openid-connect/certs"/></PublicKey>
+  <Issuer>https://YOUR_IDP/realms/sentinel</Issuer>
+  <Audience>sentinel-api</Audience>
+</VerifyJWT>

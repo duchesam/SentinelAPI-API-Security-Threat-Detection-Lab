@@ -1,0 +1,5 @@
+.venv
+.state
+.git
+.pytest_cache
+dist

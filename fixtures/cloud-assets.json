@@ -1,0 +1,27 @@
+[
+  {
+    "id": "public-api",
+    "public": true,
+    "encrypted": true,
+    "permissions": [
+      "storage.read"
+    ],
+    "can_access": [
+      "service-account"
+    ]
+  },
+  {
+    "id": "service-account",
+    "permissions": [
+      "*"
+    ],
+    "can_access": [
+      "payment-store"
+    ]
+  },
+  {
+    "id": "payment-store",
+    "encrypted": false,
+    "sensitive": true
+  }
+]

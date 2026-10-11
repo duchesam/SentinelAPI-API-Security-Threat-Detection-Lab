@@ -1,0 +1,106 @@
+{
+  "realm": "sentinel",
+  "enabled": true,
+  "roles": {
+    "realm": [
+      {
+        "name": "viewer"
+      },
+      {
+        "name": "analyst"
+      },
+      {
+        "name": "admin"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "sentinel-api",
+      "publicClient": true,
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": false,
+      "protocolMappers": [
+        {
+          "name": "tenant",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "config": {
+            "user.attribute": "tenant",
+            "claim.name": "tenant",
+            "jsonType.label": "String",
+            "access.token.claim": "true"
+          }
+        },
+        {
+          "name": "audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "config": {
+            "included.client.audience": "sentinel-api",
+            "access.token.claim": "true"
+          }
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "alice",
+      "enabled": true,
+      "attributes": {
+        "tenant": [
+          "tenant-a"
+        ]
+      },
+      "realmRoles": [
+        "viewer"
+      ],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Synthetic-Lab-Only-2026",
+          "temporary": false
+        }
+      ]
+    },
+    {
+      "username": "bob",
+      "enabled": true,
+      "attributes": {
+        "tenant": [
+          "tenant-b"
+        ]
+      },
+      "realmRoles": [
+        "viewer"
+      ],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Synthetic-Lab-Only-2026",
+          "temporary": false
+        }
+      ]
+    },
+    {
+      "username": "analyst",
+      "enabled": true,
+      "attributes": {
+        "tenant": [
+          "tenant-a"
+        ]
+      },
+      "realmRoles": [
+        "analyst"
+      ],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Synthetic-Lab-Only-2026",
+          "temporary": false
+        }
+      ]
+    }
+  ]
+}
