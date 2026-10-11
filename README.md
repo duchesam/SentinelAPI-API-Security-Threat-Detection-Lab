@@ -2,9 +2,13 @@
 
 Built by Ermias Seyoum. An educational, reproducible security engineering project with real local enforcement and a read-only hosted evidence viewer.
 
+[![Security validation](https://github.com/duchesam/SentinelAPI-API-Security-Threat-Detection-Lab/actions/workflows/security.yml/badge.svg)](https://github.com/duchesam/SentinelAPI-API-Security-Threat-Detection-Lab/actions/workflows/security.yml)
+
 ## Quick start (Python 3.12+)
 
 ```bash
+git clone https://github.com/duchesam/SentinelAPI-API-Security-Threat-Detection-Lab.git
+cd SentinelAPI-API-Security-Threat-Detection-Lab
 bash scripts/run_lab.sh
 ```
 
@@ -52,7 +56,7 @@ For a locally running Python API, set `JWT_ISSUER=http://localhost:8082/realms/s
 
 ## Verification and limitations
 
-Read `docs/project-guide.md` for the complete control matrix and limitations. Recorded metrics are small local samples, not enterprise performance measurements. The hosted page is a static viewer and does not operate a live SOC. Container services, Keycloak, Apigee, Terraform, and CI execution require separate environment validation. mTLS, Kubernetes, live telemetry, and an LLM-backed assistant are future work. The evidence brief is deterministic and uses only referenced event fields.
+Read `docs/project-guide.md` for the complete control matrix and limitations. Recorded metrics are small local samples, not enterprise performance measurements. The hosted page is a static viewer and does not operate a live SOC. The GitHub Actions workflow checks tests, static analysis, dependencies, secrets, and the container image on pushes and pull requests. See the badge above for the current result. Full Compose services, Keycloak, Apigee, and Terraform still require separate integration validation. mTLS, Kubernetes, live telemetry, and an LLM-backed assistant are future work. The evidence brief is deterministic and uses only referenced event fields.
 
 No Google, Meta, FBI, or other company endorsement is claimed. No external scanning, real payment data, or automatic remediation is provided.
 
