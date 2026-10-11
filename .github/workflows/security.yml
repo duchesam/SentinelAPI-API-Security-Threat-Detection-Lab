@@ -44,12 +44,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker build -t sentinel-lab:ci .
-      - uses: aquasecurity/trivy-action@0.30.0
+      - uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: sentinel-lab:ci
           severity: HIGH,CRITICAL
           exit-code: '1'
-      - uses: aquasecurity/trivy-action@0.30.0
+      - uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: sentinel-lab:ci
           format: cyclonedx

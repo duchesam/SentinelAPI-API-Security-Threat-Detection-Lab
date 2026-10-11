@@ -57,7 +57,7 @@ def test_forged_signature(lab):
     assert lab[0].get('/payments/pay-a-001',headers=headers(lab,key=bad)).status_code==401
 
 def test_algorithm_confusion(lab):
-    assert lab[0].get('/payments/pay-a-001',headers=headers(lab,key='synthetic-test-key-with-at-least-32-bytes',algorithm='HS256')).status_code==401
+    assert lab[0].get('/payments/pay-a-001',headers=headers(lab,key=bytes(range(32)),algorithm='HS256')).status_code==401
 
 def test_required_expiry(lab):
     c={'sub':'alice','tenant':'tenant-a','roles':['viewer'],'iss':'sentinel-local','aud':'sentinel-api','iat':int(time.time())}
