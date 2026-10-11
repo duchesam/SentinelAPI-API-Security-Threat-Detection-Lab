@@ -6,7 +6,9 @@ Owner: Ermias Seyoum. Purpose: demonstrate API and cloud security engineering th
 
 **Implemented and locally tested:** Python/FastAPI, RS256 token checks, object-level authorization, tenant-filtered lists, analyst role checks, tenant-scoped incident access, incident status updates, payload validation and limits, structured redacted audit events, local rate limiting and recovery, five detection rules, SQLite persistence, fixture posture and path model, browser replay, filters, and deterministic evidence brief.
 
-**Implemented adapters requiring integration validation:** PostgreSQL SQLAlchemy connection, Redis atomic limiter, Nginx gateway, Docker Compose, optional Keycloak realm, Apigee policy examples, Terraform private storage example, GitHub Actions jobs. Docker, cloud credentials, and browser-control infrastructure were unavailable during this build. Browser layout was not visually inspected. JavaScript syntax, pure interaction logic, static asset references, and Python enforcement were checked.
+**Implemented adapters requiring integration validation:** PostgreSQL SQLAlchemy connection, Redis atomic limiter, Nginx gateway, Docker Compose, optional Keycloak realm, Apigee policy examples, Terraform private storage example. Full Compose and cloud integrations have not been exercised. Browser layout was not visually inspected. JavaScript syntax, pure interaction logic, static asset references, and Python enforcement were checked.
+
+**GitHub validation:** The repository includes automated regression, static-analysis, dependency, secret, and container checks. GitHub Actions built the Alpine image, passed 35 API tests inside Docker, and passed the HIGH/CRITICAL image scan. The workflow publishes test results and a CycloneDX SBOM. Check Actions for the latest result.
 
 **Future work:** deployed Apigee, live cloud telemetry, Kubernetes manifests and runtime hardening, mTLS certificate lifecycle, optional external-model assistant, durable distributed detection aggregation, retention policy, database migrations, and expanded workload evaluation. Frontend uses native JavaScript rather than React to keep the hosted replay buildless and dependency-free.
 
@@ -92,4 +94,4 @@ Overview dashboard; denied API replay; incident evidence; cloud model before/aft
 
 ## Public sharing
 
-The initial showcase is owner-private. To share with employers or clients, change its audience through Sites after the user requests public access. No Upwork, Handshake, LinkedIn, or external GitHub submission has been made. Preserve the synthetic/read-only boundary if it is made public.
+The initial showcase is owner-private. To share with employers or clients, change its audience through Sites after the user requests public access. The source is published at https://github.com/duchesam/SentinelAPI-API-Security-Threat-Detection-Lab. Upwork, Handshake, and LinkedIn entries are managed separately. Preserve the synthetic/read-only boundary if it is made public.
