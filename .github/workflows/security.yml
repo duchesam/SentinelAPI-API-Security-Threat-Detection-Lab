@@ -44,15 +44,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker build -t sentinel-lab:ci .
+      - run: docker run --rm sentinel-lab:ci pytest /app/backend/tests -q
       - uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: sentinel-lab:ci
           severity: HIGH,CRITICAL
           exit-code: '1'
       - uses: aquasecurity/trivy-action@v0.36.0
+        if: always()
         with:
           image-ref: sentinel-lab:ci
           format: cyclonedx
           output: sbom.cdx.json
       - uses: actions/upload-artifact@v4
+        if: always()
         with: {name: sbom, path: sbom.cdx.json}
